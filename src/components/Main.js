@@ -17,20 +17,52 @@ imageDatas = (function genImageURL(imageDataArr){
 // console.log(imageDatas[0].imageURL)
 // ---------endbuild
 
-class AppComponent extends React.Component {
+// ----------添加图片组件
+class ImgFigure extends React.Component{
+  render(){
+    return(
+      <figure className="img-figure">
+        <img src={this.props.data.imageURL}
+             alt={this.props.data.title}
+        />
+        <figcaption>
+          <h2 className="img-title">{this.props.data.title}</h2>
+        </figcaption>
+      </figure>
+    );
+  }
+}
+// ----------endbuild
+
+//----------舞台结构
+class GalleryByReactApp extends React.Component {
   render() {
+
+    // 定义导航点数组
+    let controllerUnits = [ ];
+    // 定义图片数组，遍历图片信息，把图片信息增加到数组里
+    let imgFigures = [ ];
+    imageDatas.forEach(function(obj){
+      //data: 定义ImgFigure的属性，可以随便定义：test\dat都行
+      imgFigures.push(<ImgFigure data={obj}/>);
+      console.log(obj);
+    })
+
     return (
       <section className="stage">
         <section className="img-sec">
+          {imgFigures}
         </section>
         <nav className="controller-nav">
+          {controllerUnits}
         </nav>
       </section>
     );
   }
 }
+//----------endbuild
 
-AppComponent.defaultProps = {
+GalleryByReactApp.defaultProps = {
 };
 
-export default AppComponent;
+export default GalleryByReactApp;
