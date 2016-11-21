@@ -3,6 +3,8 @@ require('styles/App.css');
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import ImgFigure from './imgPos';
+import getRangeRandom from './function';
 
 //获取图片相关数据
 let imageDatas = require("../data/imageDatas.json");
@@ -18,35 +20,7 @@ imageDatas = (function genImageURL(imageDataArr){
 // console.log(imageDatas[0].imageURL)
 // ---------endbuild
 
-// -----------在区间内取随机值，参数是最小值和最大值
-function getRangeRandom(low,high){
-  return Math.floor(Math.random() * (high - low) + low);
-}
-// -----------endbuild
 
-// ----------添加图片组件，搭建图片结构
-class ImgFigure extends React.Component{
-  render(){
-
-    let styleObj = {};
-    // 如果props属性中指定了这张图片的位置，则使用
-    if(this.props.arrange.pos){
-      styleObj = this.props.arrange.pos;
-    }
-
-    return(
-      <figure className="img-figure" style={styleObj}>
-        <img src={this.props.data.imageURL}
-             alt={this.props.data.title}
-        />
-        <figcaption>
-          <h2 className="img-title">{this.props.data.title}</h2>
-        </figcaption>
-      </figure>
-    );
-  }
-}
-// ----------endbuild
 
 //----------舞台结构
 class GalleryByReactApp extends React.Component {
@@ -174,20 +148,6 @@ class GalleryByReactApp extends React.Component {
 
   }
 
-  // 初始化state，图片的left\top位置
-  // getInitialState() {
-  //   return{
-  //     imgsArrangeArr: [
-  //       {
-  //         pos:{
-  //           left: '0',
-  //           top: '0'
-  //         }
-  //       }
-  //     ]
-  //   }
-  // }
-
   // react component加载后的回调函数：componentDidMount
   // 组件加载以后，为每张图片计算其位置的范围(初始化constant)
   componentDidMount() {
@@ -273,7 +233,17 @@ class GalleryByReactApp extends React.Component {
 }
 //----------endbuild
 
-GalleryByReactApp.defaultProps = {
-};
+// GalleryByReactApp.defaultProps = {
+// };
 
 export default GalleryByReactApp;
+
+// import dog from './dogClass';
+// import {run, eat} from './dogClass';
+
+// import {run: dog.run, eat: dog.eat} from './dogClass';
+// import {run, eat} from './dogClass';
+
+
+// import cube from './imgPos';
+// console.log('hhhhhh');
