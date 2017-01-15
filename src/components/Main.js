@@ -4,20 +4,26 @@ require('styles/App.css');
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ImgFigure from './imgPos';
-import getRangeRandom from './function';
+import { getRangeRandom, get30DegRandom } from './function';
 
 //获取图片相关数据
-let imageDatas = require("../data/imageDatas.json");
+let imageDatas = require('../data/imageDatas.json');
 
-//--------利用自执行函数，将图片名信息转成图片URL路径信息
-imageDatas = (function genImageURL(imageDataArr){
-  for(let i=0; i<imageDataArr.length; i++){
-    //为单个图片信息增加属性，为该属性附上地址信息
-    imageDataArr[i].imageURL = require('../images/' + imageDataArr[i].fileName);
-  }
-  return imageDataArr;
-})(imageDatas);
-// console.log(imageDatas[0].imageURL)
+//--------方法1，遍历数组，将图片名信息转成图片URL路径信息
+imageDatas = imageDatas.map((item) => {
+  item.imageURL = '../images/' + item.fileName;
+  return item;
+})
+// console.log('imageDatas', imageDatas); // Array[10]
+
+//--------方法2，利用自执行函数，将图片名信息转成图片URL路径信息
+// imageDatas = (function genImageURL(imageDataArr){
+//   for(let i=0; i<imageDataArr.length; i++){
+//     //为单个图片信息增加属性，为该属性附上地址信息
+//     imageDataArr[i].imageURL = '../images/' + imageDataArr[i].fileName;
+//   }
+//   return imageDataArr;
+// })(imageDatas);
 // ---------endbuild
 
 
@@ -48,16 +54,36 @@ class GalleryByReactApp extends React.Component {
       imgsArrangeArr: [
         // {
         //   pos:{
-        //     left: '0',
-        //     top: '0'
-        //   }
+        //     left: 0,
+        //     top: 0
+        //   },
+        //   rotate: 0,   // 图片的旋转角度
+        //   isInverse: false   // 设置图片是否翻转的状态
         // }
       ]
     }
   }
 
+  /*
+   * 翻转图片函数
+   * @param index 输入当前被执行inverse操作的图片对应的图片信息数组的index值
+   * @return {function} 这是一个闭包函数，其中return一个真正待被执行的函数
+   */
+  inverse (index) {
+    return function () {
+      let imgsArrangeArr = this.state.imgsArrangeArr;
+
+      imgsArrangeArr[index].isInverse = !imgsArrangeArr[index].isInverse;  // 翻转取反
+
+      this.setState({
+        imgsArrangeArr: imgsArrangeArr  // 触发视图的重新渲染
+      });
+
+    }.bind(this);
+  }
+
   // 封装函数，图片在取值范围内的排布，指定居中排布哪个图片
-  rearrange(centerIndex) {
+  rearrange (centerIndex) {
     let imgsArrangeArr = this.state.imgsArrangeArr,
         Constant = this.Constant,
 /* * 图片的取值范围
@@ -86,6 +112,9 @@ class GalleryByReactApp extends React.Component {
 
     // 居中centerIndex的图片的位置
     imgsArrangeCenterArr[0].pos = centerPos;
+
+    // 居中centerIndex的图片不需要旋转
+    imgsArrangeCenterArr[0].rotate = 0;
 /* * endbuild
  */
 
@@ -101,9 +130,12 @@ class GalleryByReactApp extends React.Component {
 
     // 布局位于上侧的图片的位置
     imgsArrangeTopArr.forEach(function(value,index){
-      imgsArrangeTopArr[index].pos = {
-        left: getRangeRandom(vPosRangeX[0], vPosRangeX[1]), // 调用上面的在区间内取随机数的函数
-        top: getRangeRandom(vPosRangeTopY[0], vPosRangeTopY[1])
+      imgsArrangeTopArr[index] = {
+        pos: {
+          left: getRangeRandom(vPosRangeX[0], vPosRangeX[1]), // 调用上面的在区间内取随机数的函数
+          top: getRangeRandom(vPosRangeTopY[0], vPosRangeTopY[1])
+        },
+        rotate: get30DegRandom()
       }
     })
  /* * endbuild
@@ -122,9 +154,12 @@ class GalleryByReactApp extends React.Component {
         hPosRangeLOrRX = hPosRangeRightSecX;
       }
 
-      imgsArrangeArr[i].pos = {
-        left: getRangeRandom(hPosRangeLOrRX[0], hPosRangeLOrRX[1]),
-        top: getRangeRandom(hPosRangeY[0], hPosRangeY[1])
+      imgsArrangeArr[i] = {
+        pos: {
+          left: getRangeRandom(hPosRangeLOrRX[0], hPosRangeLOrRX[1]),
+          top: getRangeRandom(hPosRangeY[0], hPosRangeY[1])
+        },
+        rotate: get30DegRandom()
       }
     }
 /* * endbuild
@@ -207,16 +242,21 @@ class GalleryByReactApp extends React.Component {
       if(!this.state.imgsArrangeArr[index]){
         this.state.imgsArrangeArr[index] = {
           pos: {
-            left: '0',
-            top: '0'
-          }
+            left: 0,
+            top: 0
+          },
+          rotate: 0,
+          isInverse: false
         }
       }
 
       //data: 定义ImgFigure的属性，可以随便定义：test\dat都行
       //把函数内部的this指向函数外部的this(component对象实例)
-      imgFigures.push(<ImgFigure data={obj} ref={'imgFigure' + index} key={index} arrange={this.state.imgsArrangeArr[index]} />);
+      imgFigures.push(
+        <ImgFigure data={obj} ref={'imgFigure' + index} key={index} arrange={this.state.imgsArrangeArr[index]} inverse={this.inverse(index)} />
+      );
       // console.log(imgFigures);
+
     }.bind(this))
 
     return (

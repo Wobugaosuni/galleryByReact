@@ -48,6 +48,12 @@ figcaption .img-title{
 }
 /* image -- end */
 
+/* 图片翻转  -- start */
+.is-inverse {
+
+}
+/* 图片翻转  -- end */
+
 /* controller -- start */
 .controller-nav{
   position: relative;
