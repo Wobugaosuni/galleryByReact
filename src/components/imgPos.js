@@ -42,16 +42,14 @@ class ImgFigure extends React.Component{
     ImgFigureClassName += this.props.arrange.isInverse ? ' is-inverse' : '';  // 两个类名之间要有空格分隔，is-inverse前面注意有个空格
 
     return(
-      <div>
-        <figure className={ImgFigureClassName} style={styleObj} onClick={this.figureClick.bind(this)}>
-          <img src={this.props.data.imageURL}
-               alt={this.props.data.title}
-          />
-          <figcaption>
-            <h2 className="img-title">{this.props.data.title}</h2>
-          </figcaption>
-        </figure>
-      </div>
+      <figure className={ImgFigureClassName} style={styleObj} onClick={this.figureClick.bind(this)}>
+        <img src={this.props.data.imageURL}
+              alt={this.props.data.title}
+        />
+        <figcaption>
+          <h2 className="img-title">{this.props.data.title}</h2>
+        </figcaption>
+      </figure>
     );
   }
 }

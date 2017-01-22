@@ -208,7 +208,7 @@ class GalleryByReactApp extends React.Component {
       left: halfStageW - halfImgW,
       top: halfStageH - halfImgH
     }
-
+debugger
     //左右两部分的取值范围
     this.Constant.hPosRange.leftSecX[0] = -halfImgW;
     this.Constant.hPosRange.leftSecX[1] = halfStageW - halfImgW * 3;
