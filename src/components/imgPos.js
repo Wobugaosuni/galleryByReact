@@ -19,15 +19,22 @@ class ImgFigure extends React.Component{
       this.props.center();
     }
   }
-  
+
   render(){
 
     let styleObj = {};
+
+    /*
+     * 使用图片的位置信息
+     */
     // 如果props属性中指定了这张图片的位置，则使用
     if (this.props.arrange.pos){
       styleObj = this.props.arrange.pos;
     }
 
+    /*
+     * 图片的旋转
+     */
     // 如果图片的旋转角度有值并且不为0，添加旋转角度。
     // 兼容各种浏览器，浏览器前缀react写法参考：http://www.andismith.com/blog/2012/02/modernizr-prefixed/
     // 旋转的CSS写法
@@ -45,6 +52,13 @@ class ImgFigure extends React.Component{
     //     styleObj[arrayItem] = 'rotate(' + this.props.arrange.rotate + 'deg)';
     //   }.bind(this))
     // }
+
+    /*
+     * 居中图片z-index高于旁边的图片，低于controller-nav的。取11的一次方
+     */
+    if (this.props.arrange.isCenter) {
+      styleObj.zIndex = 11;
+    }
 
     // 用类名控制图片的翻转
     let ImgFigureClassName = 'img-figure';
