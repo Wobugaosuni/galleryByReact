@@ -35,7 +35,19 @@ html,body {
   padding: 40px;
   box-sizing: border-box; /* width包含padding\border */
   background-color: #fff;
+
+  cursor: pointer;
+ 
+  transform-origin: 0 50% 0; /* 被转换元素的位置 3D的分别对应: x轴，y轴，z轴 */
+  transform-style: preserve-3d; /* 子元素将保留其3D位置 */
+  transition: transform .6s ease-in-out; /* transform应用过渡效果，0.6秒完成，慢速开始和结束 */
 }
+
+/* 图片翻转  -- start */
+.img-figure.is-inverse {
+  transform: translate(320px) rotateY(180deg);
+}
+/* 图片翻转  -- end */
 
 figcaption{
   text-align: center;
@@ -46,13 +58,24 @@ figcaption .img-title{
   color: #a7a0a2;
   font-size: 16px;
 }
-/* image -- end */
 
-/* 图片翻转  -- start */
-.is-inverse {
+figcaption .img-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 50px 40px;
+  overflow: auto;
+  color: #666;
+  background: #fff;
 
+  transform: rotateY(180deg) translateZ(1px);
+  
 }
-/* 图片翻转  -- end */
+
+/* image -- end */
 
 /* controller -- start */
 .controller-nav{

@@ -59,13 +59,14 @@ class GalleryByReactApp extends React.Component {
         //   },
         //   rotate: 0,   // 图片的旋转角度
         //   isInverse: false   // 设置图片是否翻转的状态
+        //   isCenter: false   // 默认图片不居中
         // }
       ]
     }
   }
 
   /*
-   * 翻转图片函数
+   * 翻转居中的图片函数
    * @param index 输入当前被执行inverse操作的图片对应的图片信息数组的index值
    * @return {function} 这是一个闭包函数，其中return一个真正待被执行的函数
    */
@@ -80,6 +81,17 @@ class GalleryByReactApp extends React.Component {
       });
 
     }.bind(this);
+  }
+
+  /*
+   * 当非居中的图片被点击时，利用rearrange函数，居中对应index的图片
+   * @param index，需要被居中的图片信息数组中的index值
+   * @return {function}
+   */
+  center (index) {
+    return function () {
+      this.rearrange(index)
+    }
   }
 
   // 封装函数，图片在取值范围内的排布，指定居中排布哪个图片
@@ -110,11 +122,12 @@ class GalleryByReactApp extends React.Component {
     let imgsArrangeCenterArr = [];
     imgsArrangeCenterArr = imgsArrangeArr.splice(centerIndex, 1);  // 拿到中间图片后把中间图片的状态信息从数组里删除
 
-    // 居中centerIndex的图片的位置
-    imgsArrangeCenterArr[0].pos = centerPos;
-
-    // 居中centerIndex的图片不需要旋转
-    imgsArrangeCenterArr[0].rotate = 0;
+    // 居中centerIndex的图片的位置，不需要旋转
+    imgsArrangeCenterArr[0] = {
+      pos: centerPos,
+      rotate: 0,
+      isCenter: true
+    }
 /* * endbuild
  */
 
@@ -135,7 +148,8 @@ class GalleryByReactApp extends React.Component {
           left: getRangeRandom(vPosRangeX[0], vPosRangeX[1]), // 调用上面的在区间内取随机数的函数
           top: getRangeRandom(vPosRangeTopY[0], vPosRangeTopY[1])
         },
-        rotate: get30DegRandom()
+        rotate: get30DegRandom(),
+        isCenter: false
       }
     })
  /* * endbuild
@@ -159,7 +173,8 @@ class GalleryByReactApp extends React.Component {
           left: getRangeRandom(hPosRangeLOrRX[0], hPosRangeLOrRX[1]),
           top: getRangeRandom(hPosRangeY[0], hPosRangeY[1])
         },
-        rotate: get30DegRandom()
+        rotate: get30DegRandom(),
+        isCenter: false
       }
     }
 /* * endbuild
@@ -208,7 +223,7 @@ class GalleryByReactApp extends React.Component {
       left: halfStageW - halfImgW,
       top: halfStageH - halfImgH
     }
-debugger
+
     //左右两部分的取值范围
     this.Constant.hPosRange.leftSecX[0] = -halfImgW;
     this.Constant.hPosRange.leftSecX[1] = halfStageW - halfImgW * 3;
@@ -236,8 +251,7 @@ debugger
     // 定义图片数组，遍历图片信息，把图片信息增加到数组里
     let imgFigures = [ ];
 
-    imageDatas.forEach(function(obj,index){
-
+    imageDatas.forEach(function(item,index){
       // 图片的初始位置
       if(!this.state.imgsArrangeArr[index]){
         this.state.imgsArrangeArr[index] = {
@@ -246,17 +260,16 @@ debugger
             top: 0
           },
           rotate: 0,
-          isInverse: false
+          isInverse: false,
+          isCenter: false
         }
       }
-
       //data: 定义ImgFigure的属性，可以随便定义：test\dat都行
       //把函数内部的this指向函数外部的this(component对象实例)
       imgFigures.push(
-        <ImgFigure data={obj} ref={'imgFigure' + index} key={index} arrange={this.state.imgsArrangeArr[index]} inverse={this.inverse(index)} />
+        <ImgFigure data={item} ref={'imgFigure' + index} key={index} arrange={this.state.imgsArrangeArr[index]} inverse={this.inverse(index)} center={this.center(index).bind(this)}/>
       );
       // console.log(imgFigures);
-
     }.bind(this))
 
     return (

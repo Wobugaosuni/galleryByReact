@@ -5,12 +5,21 @@ import ReactDOM from 'react-dom';
 class ImgFigure extends React.Component{
   /*
    * figure的点击处理函数
+   * 如果是居中的图片，翻转
+   * 否则将图片设为居中
    */
-
-  figureClick () {
-    // 调用父组件的函数
-    this.props.inverse();
+  figureClick (e) {
+    e.stopPropagation();
+    e.preventDefault();
+    
+    if (this.props.arrange.isCenter) {
+      // 调用父组件的函数
+      this.props.inverse();
+    } else {
+      this.props.center();
+    }
   }
+  
   render(){
 
     let styleObj = {};
@@ -48,6 +57,11 @@ class ImgFigure extends React.Component{
         />
         <figcaption>
           <h2 className="img-title">{this.props.data.title}</h2>
+          <div className="img-back" onClick={this.figureClick.bind(this)}>
+            <p>
+              {this.props.data.desc}
+            </p>
+          </div>
         </figcaption>
       </figure>
     );
