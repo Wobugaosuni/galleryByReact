@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 // ----------添加图片组件，搭建图片结构
 class ImgFigure extends React.Component{
