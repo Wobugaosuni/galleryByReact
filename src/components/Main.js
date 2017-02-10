@@ -4,6 +4,7 @@ require('styles/App.css');
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ImgFigure from './imgPos';
+import ControllerUnits from './controllerUnits';
 import { getRangeRandom, get30DegRandom } from './function';
 
 //获取图片相关数据
@@ -25,7 +26,6 @@ imageDatas = imageDatas.map((item) => {
 //   return imageDataArr;
 // })(imageDatas);
 // ---------endbuild
-
 
 
 //----------舞台结构
@@ -86,7 +86,7 @@ class GalleryByReactApp extends React.Component {
   /*
    * 当非居中的图片被点击时，利用rearrange函数，居中对应index的图片
    * @param index，需要被居中的图片信息数组中的index值
-   * @return {function}
+   * @return {function} (return一个闭包函数)
    */
   center (index) {
     return function () {
@@ -247,9 +247,9 @@ class GalleryByReactApp extends React.Component {
   render() {
 
     // 定义导航点数组
-    let controllerUnits = [ ];
+    let controllerUnits = [];
     // 定义图片数组，遍历图片信息，把图片信息增加到数组里
-    let imgFigures = [ ];
+    let imgFigures = [];
 
     imageDatas.forEach(function(item,index){
       // 图片的初始位置
@@ -267,9 +267,26 @@ class GalleryByReactApp extends React.Component {
       //data: 定义ImgFigure的属性，可以随便定义：test\dat都行
       //把函数内部的this指向函数外部的this(component对象实例)
       imgFigures.push(
-        <ImgFigure data={item} ref={'imgFigure' + index} key={index} arrange={this.state.imgsArrangeArr[index]} inverse={this.inverse(index)} center={this.center(index).bind(this)}/>
+        <ImgFigure
+          key={index}
+          data={item}
+          ref={'imgFigure' + index}
+          key={index}
+          arrange={this.state.imgsArrangeArr[index]}
+          inverse={this.inverse(index)}
+          center={this.center(index).bind(this)}
+        />
       );
       // console.log(imgFigures);
+
+      controllerUnits.push(
+        <ControllerUnits
+          key={index}
+          arrange={this.state.imgsArrangeArr[index]}
+          inverse={this.inverse(index)}
+          center={this.center(index).bind(this)}
+        />
+      )
     }.bind(this))
 
     return (
