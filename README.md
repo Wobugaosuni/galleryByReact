@@ -29,6 +29,7 @@
 ## 遇到的困难和解决方法
 ### 翻转函数和样式的实现
   - 解决方法: 规划好整个组件的排版布局，如下。通过类名控制翻转
+
   ```html
   <section> -- relative
     <section> -- relative
@@ -55,8 +56,7 @@
     在本地编译时，由于运行时是在根目录，可以写绝对路径。 <br />
     但在生成的网页中，项目处于二级目录下，需要将编译后的绝对地址改为相对地址： <br />
     1. default.js: <br />
-    将`publicPath: '/assets/',` <br />
-    改成：`publicPath: 'gallaryByReact/assets/',`  <br />
+    将`publicPath: '/assets/',` 改成：`publicPath: 'gallaryByReact/assets/',`  <br />
     index.html: <br />
     将`<script type="text/javascript" src="/assets/app.js"></script>` <br />
     改成：`<script type="text/javascript" src="assets/app.js"></script>`
