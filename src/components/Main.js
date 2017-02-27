@@ -12,7 +12,7 @@ let imageDatas = require('../data/imageDatas.json');
 
 //--------方法1，遍历数组，将图片名信息转成图片URL路径信息
 imageDatas = imageDatas.map((item) => {
-  item.imageURL = '../images/' + item.fileName;
+  item.imageURL = 'images/' + item.fileName;
   return item;
 })
 // console.log('imageDatas', imageDatas); // Array[10]

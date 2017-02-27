@@ -50,10 +50,10 @@ html,body {
 
 .img-figure {
   position: absolute;
-  width: 320px;
-  height: 360px;
+  width: 260px;
+  height: 300px;
   margin: 0;
-  padding: 40px;
+  padding: 30px;
   box-sizing: border-box; /* width包含padding\border */
   background-color: #fff;
 
@@ -64,9 +64,13 @@ html,body {
   transition: transform .6s ease-in-out, left .6s ease-in-out, top .6s ease-in-out; /* transform、left、top分别应用过渡效果，0.6秒完成，慢速开始和结束 */
 }
 
+.img-figure img {
+  width: 100%;
+}
+
 /* 图片翻转  -- start */
 .img-figure.is-inverse {
-  transform: translate(320px) rotateY(180deg);
+  transform: translate(260px) rotateY(180deg);
 }
 /* 图片翻转  -- end */
 

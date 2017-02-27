@@ -66,7 +66,7 @@ class ImgFigure extends React.Component{
     return(
       <figure className={ImgFigureClassName} style={styleObj} onClick={this.figureClick.bind(this)}>
         <img src={this.props.data.imageURL}
-              alt={this.props.data.title}
+             alt={this.props.data.title}
         />
         <figcaption>
           <h2 className="img-title">{this.props.data.title}</h2>
