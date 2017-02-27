@@ -1,5 +1,5 @@
 ## 项目概览
-链接：https://wobugaosuni.github.io/galleryByReact/
+链接：https://wobugaosuni.github.io/galleryByReact/ <br />
 基本需求：
 - 刷新网页，每张图片随机排布，而且图片在-30度~30度之间随机旋转
 - 点击位于中心的图片，翻转
@@ -18,17 +18,17 @@
 - 使用`json`格式存放图片信息
 
 ## 在本地打开项目
-1. 在终端执行以下命令安装环境依赖
-  `npm install`
+1. 在终端执行以下命令安装环境依赖 <br />
+  `npm install` <br />
   (下载慢的情况下，可以使用淘宝镜像：cnpm；或者直接在终端使用代理翻墙)
-2. 安装成功后执行以下命令，即可在浏览器中打开
+2. 安装成功后执行以下命令，即可在浏览器中打开 <br />
   `npm start`
-3. dist文件的编译，执行
+3. dist文件的编译，执行 <br />
   `npm run dist`
 
 ## 遇到的困难和解决方法
-- 翻转函数和样式的实现
-  解决方法: 规划好整个组件的排版布局，如下。通过类名控制翻转
+### 翻转函数和样式的实现
+  - 解决方法: 规划好整个组件的排版布局，如下。通过类名控制翻转
   ```html
   <section> -- relative
     <section> -- relative
@@ -45,27 +45,29 @@
     </nav>
   </section>
   ```
-  由于实现图片翻转有两种方式：点击图片自身 + 点击导航点
+  由于实现图片翻转有两种方式：点击图片自身 + 点击导航点 <br />
   因此翻转函数写在父组件为宜，直接return一个闭包函数
 
-- 把项目发布到gh-pages分支
+### 把项目发布到gh-pages分支
   - 打开网页后发现报错： <br />
     <img src="src/images/error.jpeg" width="350" alt="error" /> <br />
-    原因：
-    在本地编译时，由于运行时是在根目录，可以写绝对路径。
-    但在生成的网页中，项目处于二级目录下，需要将编译后的绝对地址改为相对地址：
-    1. default.js:
-    将`publicPath: '/assets/',`改成：`publicPath: 'gallaryByReact/assets/',`
-    index.html:
-    将`<script type="text/javascript" src="/assets/app.js"></script>`,改成：`<script type="text/javascript" src="assets/app.js"></script>`
+    原因：<br />
+    在本地编译时，由于运行时是在根目录，可以写绝对路径。 <br />
+    但在生成的网页中，项目处于二级目录下，需要将编译后的绝对地址改为相对地址： <br />
+    1. default.js: <br />
+    将`publicPath: '/assets/',` <br />
+    改成：`publicPath: 'gallaryByReact/assets/',`  <br />
+    index.html: <br />
+    将`<script type="text/javascript" src="/assets/app.js"></script>` <br />
+    改成：`<script type="text/javascript" src="assets/app.js"></script>`
     2. 在终端重新编译dist，执行：`npm run dist`
-    3. 把修改的dist提交到gh-pages分支
-    `git add dist`
-    `git commit -m "change path from absolute to relative"`
+    3. 把修改的dist提交到gh-pages分支 <br />
+    `git add dist` <br />
+    `git commit -m "change path from absolute to relative"` <br />
     `git subtree push --prefix=dist origin gh-pages`
 
   - 图片没有编译到dist目录
-    npm run dist时，没有把images目录包含进去
-    ` "copy": "copyfiles -f ./src/index.html ./src/favicon.ico ./dist"`
-    解决方法：增加images目录到dist，如下
+    npm run dist时，没有把images目录包含进去 <br />
+    ` "copy": "copyfiles -f ./src/index.html ./src/favicon.ico ./dist"` <br />
+    解决方法：增加images目录到dist，如下 <br />
     ` "copy": "copyfiles -f ./src/index.html ./src/favicon.ico ./dist && cp -a ./src/images ./dist/"`
