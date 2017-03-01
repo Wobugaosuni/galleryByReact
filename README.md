@@ -11,7 +11,8 @@
 ## 项目简介
 - 使用`YEOMAN`搭建项目，生成项目文件、代码结构
 - 使用`webpack`实现前端自动化
-- 使用HTML5新增标签，如`<section>、<figure>、<figcaption>、<nav>`等
+- 使用`HTML5`新增标签，如`<section>、<figure>、<figcaption>、<nav>`等
+- 使用`lessc`编译器将less文件编译成css文件，并使用`wr`工具，实现chrome调试样式并映射到本地文件保存
 - 使用`react+ES6`框架完成画廊页面制作
 - 使用`CSS3`的transition属性，实现旋转、平移、背景色的逐渐过渡
 - 使用`iconfont`字体文件代替图片文件，支持CSS3对字体的修饰效果
