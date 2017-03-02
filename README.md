@@ -52,7 +52,9 @@
 
 ### 把项目发布到gh-pages分支
   - 打开网页后发现报错： <br />
-    <img src="src/images/error.jpeg" width="350" alt="error" /> <br />
+    <div style="border: 1px solid #222">
+      <img src="src/images/error.jpeg" width="350" alt="error" />
+    </div>
     原因：<br />
     在本地编译时，由于运行时是在根目录，可以写绝对路径。 <br />
     但在生成的网页中，项目处于二级目录下，需要将编译后的绝对地址改为相对地址： <br />
