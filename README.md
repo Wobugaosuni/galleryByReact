@@ -52,8 +52,8 @@
 
 ### 把项目发布到gh-pages分支
   - 打开网页后发现报错： <br />
-    <div style="border: 1px solid #222">
-      <img src="src/images/error.jpeg" width="350" alt="error" />
+    <div style="border: 1px solid #222; width: 350px">
+      <img src="src/images/error.jpeg" width="100%" alt="error" />
     </div>
     原因：<br />
     在本地编译时，由于运行时是在根目录，可以写绝对路径。 <br />
