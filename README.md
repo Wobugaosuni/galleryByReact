@@ -77,37 +77,33 @@ Mac上有些浅色字体图片（在上面设置了白色，可以设置为深�
 ### 2. 把项目发布到gh-pages分支
 
   > 路径错误
+    <div align=center><img src="src/images/error.jpeg" width="350" alt="error" /></div>
 
-    <div align=center>
-      <img src="src/images/error.jpeg" width="350" alt="error" />
-    </div>
+    原因：<br />
+    在本地编译时，由于运行时是在根目录，可以写绝对路径。 <br />
+    但在生成的网页中，项目处于二级目录下，需要将编译后的绝对地址改为相对地址： <br />
 
-  原因：<br />
-  在本地编译时，由于运行时是在根目录，可以写绝对路径。 <br />
-  但在生成的网页中，项目处于二级目录下，需要将编译后的绝对地址改为相对地址： <br />
+    1. 将绝对路径改为相对路径
+    ```bash
+    #default.js:
+    `publicPath: '/assets/',` 改成：`publicPath: 'gallaryByReact/assets/',`
 
-  1. 将绝对路径改为相对路径
-  ```bash
-  #default.js:
-  `publicPath: '/assets/',` 改成：`publicPath: 'gallaryByReact/assets/',`
+    #index.html:
+    `<script type="text/javascript" src="/assets/app.js"></script>`
+    改成：`<script type="text/javascript" src="assets/app.js"></script>`
+    ```
 
-  #index.html:
-  `<script type="text/javascript" src="/assets/app.js"></script>`
-  改成：`<script type="text/javascript" src="assets/app.js"></script>`
-  ```
+    2. 在终端重新编译dist，执行：`npm run dist`
 
-  2. 在终端重新编译dist，执行：`npm run dist`
-
-  3. 把修改的dist提交到gh-pages分支 <br />
-  `git add dist` <br />
-  `git commit -m "change path from absolute to relative"` <br />
-  `git subtree push --prefix=dist origin gh-pages`
+    3. 把修改的dist提交到gh-pages分支 <br />
+    `git add dist` <br />
+    `git commit -m "change path from absolute to relative"` <br />
+    `git subtree push --prefix=dist origin gh-pages`
 
 
   > 图片没有编译到dist目录
+    npm run dist时，没有把images目录包含进去 <br />
+    ` "copy": "copyfiles -f ./src/index.html ./src/favicon.ico ./dist"` <br />
 
-  npm run dist时，没有把images目录包含进去 <br />
-  ` "copy": "copyfiles -f ./src/index.html ./src/favicon.ico ./dist"` <br />
-
-  解决方法：增加images目录到dist，如下 <br />
-  ` "copy": "copyfiles -f ./src/index.html ./src/favicon.ico ./dist && cp -a ./src/images ./dist/"`
+    解决方法：增加images目录到dist，如下 <br />
+    ` "copy": "copyfiles -f ./src/index.html ./src/favicon.ico ./dist && cp -a ./src/images ./dist/"`
