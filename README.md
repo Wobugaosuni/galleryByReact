@@ -102,6 +102,10 @@ Mac上有些浅色字体图片（在上面设置了白色，可以设置为深�
 
 
   - 图片没有编译到dist目录
+
+    <div align=center><img src="src/images/error2.jpeg" width="350" alt="error" /></div>
+
+    原因：<br />
     npm run dist时，没有把images目录包含进去 <br />
     ` "copy": "copyfiles -f ./src/index.html ./src/favicon.ico ./dist"` <br />
 
