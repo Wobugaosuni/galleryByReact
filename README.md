@@ -75,13 +75,13 @@ Mac上有些浅色字体图片（在上面设置了白色，可以设置为深�
   因此翻转函数写在父组件为宜，直接return一个闭包函数
 
 ### 2. 把项目发布到gh-pages分支
+  - 路径错误
 
-  > 路径错误
     <div align=center><img src="src/images/error.jpeg" width="350" alt="error" /></div>
 
     原因：<br />
-    在本地编译时，由于运行时是在根目录，可以写绝对路径。 <br />
-    但在生成的网页中，项目处于二级目录下，需要将编译后的绝对地址改为相对地址： <br />
+    在本地编译时，由于运行时是在根目录，可以写绝对路径 <br />
+    但在生成的网页中，项目处于二级目录下，需要将编译后的绝对地址改为相对地址 <br />
 
     1. 将绝对路径改为相对路径
     ```bash
@@ -101,7 +101,7 @@ Mac上有些浅色字体图片（在上面设置了白色，可以设置为深�
     `git subtree push --prefix=dist origin gh-pages`
 
 
-  > 图片没有编译到dist目录
+  - 图片没有编译到dist目录
     npm run dist时，没有把images目录包含进去 <br />
     ` "copy": "copyfiles -f ./src/index.html ./src/favicon.ico ./dist"` <br />
 
