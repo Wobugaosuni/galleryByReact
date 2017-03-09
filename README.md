@@ -1,5 +1,6 @@
 ## 项目概览
 链接：https://wobugaosuni.github.io/galleryByReact/ <br />
+参照Materliu老师的课程制作：http://www.imooc.com/learn/507 <br />
 基本需求：
 - 刷新网页，每张图片随机排布，而且图片在-30度~30度之间随机旋转
 - 点击位于中心的图片，翻转
@@ -19,20 +20,30 @@
 - 使用`json`格式存放图片信息
 
 ## 在本地打开项目
-1. 在终端执行以下命令安装环境依赖 <br />
-  `npm install` <br />
-  (下载慢的情况下，可以使用淘宝镜像：cnpm；或者直接在终端使用代理翻墙)
-2. 安装成功后执行以下命令，即可在浏览器中打开 <br />
-  `npm start`
-3. dist文件的编译，执行 <br />
-  `npm run dist`
+```bash
+# 在终端执行以下命令安装环境依赖(下载慢的情况下，可以使用淘宝镜像：cnpm；或者直接在终端使用代理翻墙)
+  npm install
+
+# 安装成功后执行以下命令，即可在浏览器中打开
+  npm start
+
+# dist文件的编译，执行
+  npm run dist
+```
 
 ## Get到的小技巧
-屏幕渲染机制：灰阶渲染（控制边缘亮度，所耗内存相对较低，应用于手机）。 亚像素渲染（效果更好，所耗内存相对更高，应用于Mac等） <br />
+屏幕渲染机制有两种：
+- 灰阶渲染：控制边缘亮度，所耗内存相对较低，应用于手机
+- 亚像素渲染：效果更好，所耗内存相对更高，应用于Mac等
+
 Mac上有些浅色字体图片（在上面设置了白色，可以设置为深色进行测试）在浏览器上显得较粗  <br />
+
 解决方案：在父元素上设置属性，修改浏览器的属性：  <br />
+
+```css
 -webkit-font-smoothing: antialiased; /* 开启chrome在Mac下字体渲染的灰阶平滑 */  <br />
 -moz-osx-font-smoothing: grayscale; /* 开启firefox在Mac下字体渲染的灰阶平滑 */
+```
 
 ## 遇到的困难和解决方法
 ### 翻转函数和样式的实现
@@ -58,24 +69,32 @@ Mac上有些浅色字体图片（在上面设置了白色，可以设置为深�
   因此翻转函数写在父组件为宜，直接return一个闭包函数
 
 ### 把项目发布到gh-pages分支
-  - 打开网页后发现报错： <br />
-    <img src="src/images/error.jpeg" width="350" alt="error" /> <br />
+
+  #### 打开网页后发现报错
+    <div align=center>
+      <img src="src/images/error.jpeg" width="350" alt="error" />
+    </div>
+
     原因：<br />
     在本地编译时，由于运行时是在根目录，可以写绝对路径。 <br />
     但在生成的网页中，项目处于二级目录下，需要将编译后的绝对地址改为相对地址： <br />
+
     1. default.js: <br />
     将`publicPath: '/assets/',` 改成：`publicPath: 'gallaryByReact/assets/',`  <br />
     index.html: <br />
     将`<script type="text/javascript" src="/assets/app.js"></script>` <br />
     改成：`<script type="text/javascript" src="assets/app.js"></script>`
+
     2. 在终端重新编译dist，执行：`npm run dist`
+
     3. 把修改的dist提交到gh-pages分支 <br />
     `git add dist` <br />
     `git commit -m "change path from absolute to relative"` <br />
     `git subtree push --prefix=dist origin gh-pages`
 
-  - 图片没有编译到dist目录
+  #### 图片没有编译到dist目录
     npm run dist时，没有把images目录包含进去 <br />
     ` "copy": "copyfiles -f ./src/index.html ./src/favicon.ico ./dist"` <br />
+
     解决方法：增加images目录到dist，如下 <br />
     ` "copy": "copyfiles -f ./src/index.html ./src/favicon.ico ./dist && cp -a ./src/images ./dist/"`
