@@ -1,8 +1,6 @@
 ## 项目概览
 链接：https://wobugaosuni.github.io/galleryByReact/ <br />
 
-参照Materliu老师的课程制作：http://www.imooc.com/learn/507 <br />
-
 基本需求：
 - 刷新网页，每张图片随机排布，而且图片在-30度~30度之间随机旋转
 - 点击位于中心的图片，翻转
